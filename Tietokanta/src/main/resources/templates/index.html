@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head lang="en">
+ 
+    <title>Aloitussivu</title>
+ <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.2/jquery.min.js"></script>
+  <script src="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js"></script>
+    <!--/*/ <th:block th:include="fragments/headerinc :: head"></th:block> /*/-->
+</head>
+
+<body>
+
+<div class="container">
+<!-- Navbar -->
+ <nav class="navbar navbar-default">
+  <div class="container-fluid">
+    <div class="navbar-header">
+      <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#myNavbar">
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>                      
+      </button>
+     
+    </div>
+    
+    <div class="collapse navbar-collapse" id="myNavbar">
+      <ul class="nav navbar-nav">
+        <li class="active"> <a href="#" th:href="@{/index}"> <span class="glyphicon glyphicon-home"></span>Kotisivu</a></li>
+      	<li><a href="#" th:href="@{/times}"> <span class="glyphicon glyphicon-time"></span>Ajat</a></li>
+       	<li><a href="#" th:href="@{/times/new}"><span class="glyphicon glyphicon-plus"></span>Lisää aika</a></li>
+      </ul>
+    </div>
+  </div>
+</nav>
+
+   <div class="jumbotron text-center">
+  <h3>Etusivu</h3>
+ 
+  
+</div> 
+
+
+   <!-- Carousel -->
+<div id="myCarousel" class="carousel slide" data-ride="carousel">
+ <ol class="carousel-indicators">
+    <li data-target="#myCarousel" data-slide-to="0" class="active"></li>
+    <li data-target="#myCarousel" data-slide-to="1"></li>
+    <li data-target="#myCarousel" data-slide-to="2"></li>
+	<li data-target="#myCarousel" data-slide-to="3"></li>
+	<li data-target="#myCarousel" data-slide-to="4"></li>
+	
+   
+  </ol>
+  
+   <div class="carousel-inner" role="listbox">
+    <div class="item active">
+      <img src="../static/images/kuva1.jpg" alt="kuva1"
+         th:src="@{images/kuva1.jpg}"/>
+    </div>
+    
+     <div class="item">
+      <img src="../static/images/kuva2.jpg" alt="kuva2"
+      th:src="@{images/kuva2.jpg}"/>
+    </div>
+    
+    <div class="item">
+      <img src="../static/images/kuva3.jpg" alt="kuva3"
+      th:src="@{images/kuva3.jpg}"/>
+    </div>
+    
+    <div class="item">
+      <img src="../static/images/kuva4.jpg" alt="kuva4"
+      th:src="@{images/kuva4.jpg}"/>
+    </div>
+    
+    <div class="item">
+      <img src="../static/images/kuva5.jpg" alt="kuva5"
+      th:src="@{images/kuva5.jpg}"/>
+    </div>
+    
+   
+</div>
+  
+  
+</div>
+</div>
+
+
+
+
+
+
+</body>
+</html>

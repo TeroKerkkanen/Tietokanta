@@ -1,0 +1,309 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head lang="en">
+
+	<title>Lisää aika</title>
+      
+<!-- Tarkistaa että kaikissa tekstikentissä on tekstiä ennen kuin voi painaa tallenna nappia. -->    
+<script type = "text/javascript">
+function checkFilled() {
+var filled = 0
+var x = document.form1.auto.value;
+x = x.replace(/^\s+/,""); 
+if (x.length > 0) {filled ++}
+
+var y = document.form1.rata.value;
+y = y.replace(/^s+/,"");  
+if (y.length > 0) {filled ++}
+
+var z = document.form1.aika.value;
+z = z.replace(/^s+/,""); 
+if (z.length > 0) {filled ++}
+
+var c = document.form1.pvm.value;
+c = c.replace(/^s+/,""); 
+if (c.length > 0) {filled ++}
+
+
+
+if (filled == 4) {
+document.getElementById("submitForm").disabled = false;
+}
+else {document.getElementById("submitForm").disabled = true}  
+
+}
+
+</script>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.2/jquery.min.js"></script>
+  <script src="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js"></script>
+
+    <!--/*/ <th:block th:include="fragments/headerinc :: head"></th:block> /*/-->
+</head>
+<body>
+<div class="container">
+
+<!-- Navbar -->
+
+<nav class="navbar navbar-default">
+  <div class="container-fluid">
+    <div class="navbar-header">
+      <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#myNavbar">
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>                      
+      </button>
+     
+    </div>
+    
+    <div class="collapse navbar-collapse" id="myNavbar">
+      <ul class="nav navbar-nav">
+        <li> <a href="#" th:href="@{/index}"> <span class="glyphicon glyphicon-home"></span>Kotisivu</a></li>
+      	<li><a href="#" th:href="@{/times}"> <span class="glyphicon glyphicon-time"></span>Ajat</a></li>
+       	<li class="active"><a href="#" th:href="@{/times/new}"><span class="glyphicon glyphicon-plus"></span>Lisää aika</a></li>
+      </ul>
+    </div>
+  </div>
+</nav>
+
+ <div class="jumbotron text-center">
+  <h3>Lisää aika</h3>
+  <!-- Ohje -->
+  
+ <!-- Trigger the modal with a button -->
+  <button type="button" id="modal_button" class="btn btn-info btn-lg" data-toggle="modal" data-target="#myModal"><span class="glyphicon glyphicon-question-sign"></span>Ohje</button>
+
+  <!-- Modal -->
+  <div class="modal fade" id="myModal" role="dialog">
+    <div class="modal-dialog">
+    
+      <!-- Modal content-->
+      <div class="modal-content">
+        <div class="modal-header">
+          <button type="button" class="close" data-dismiss="modal">&times;</button>
+          <h4 class="modal-title"><span class="glyphicon glyphicon-question-sign"></span>Ohje</h4>
+        </div>
+        <div class="modal-body">
+          <p>1. Valitse listasta auto.</p>
+          <p>2. Valitse listasta rata.</p>
+          <p>3. Syötä aika esim. 1:123:123</p>
+          <p>4. Syötä päivä esim. 25.5.2016</p>
+          <p>5. Kun kaikki kohdat on täytetty paina tallenna nappia.</p>
+          
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-default" data-dismiss="modal">Sulje</button>
+        </div>
+      </div>
+      
+    </div>
+  </div>
+</div> 
+ 
+    <div>
+    <!-- Form -->
+    <div id="form-wrapper">
+    
+        <form name="form1" class="form-horizontal" role="" th:object="${times}" th:action="@{/times}" method="post">
+            <input type="hidden" th:field="*{id}"/>
+            
+            <div class="form-group">
+                <label class="control-label col-sm-2"><span class="glyphicon glyphicon-dashboard"></span>Auto:</label>
+                <div class="col-md-10">
+                
+                <input type="text" data-toggle="tooltip" title="Esim: Ferrari" name="auto" list="autoList" onKeyUp = "checkFilled()"  placeholder="Auto" class="form-control"  th:field="*{auto}"/>
+                    
+                </div>
+            </div>
+            <div class="form-group">
+                <label class="control-label col-sm-2"><span class="glyphicon glyphicon-road"></span>Rata:</label>
+                <div class="col-md-10">
+                    <input type="text" data-toggle="tooltip" title="Esim: Suzuka"  name="rata" list="rataList" onKeyUp = "checkFilled()" placeholder="Rata" class="form-control" th:field="*{rata}"/>
+                    
+                </div>
+            </div>
+            <div class="form-group">
+                <label class="control-label col-sm-2"><span class="glyphicon glyphicon-time"></span>Aika:</label>
+                <div class="col-md-10">
+                    <input type="text" data-toggle="tooltip" title="Esim: 1:45:123" name="aika" maxlength="9" onKeyUp = "checkFilled()" pattern="^[0-9:]+$" placeholder= "Aika" class="form-control" th:field="*{aika}"/>
+                      
+                </div>
+            </div>
+              <div class="form-group">
+                <label class="control-label col-sm-2"><span class="glyphicon glyphicon-calendar"></span>Päivä:</label>
+                <div class="col-md-10">
+                    <input type="text" data-toggle="tooltip" title="Esim: 12.5.2016"  placeholder="Päivä" pattern="^[0-9.]+$"  maxlength="10"   name="pvm" onKeyUp="checkFilled()" class="form-control" th:field="*{pvm}"/>
+                 
+                </div>
+            </div>
+            <div class="row">
+     	
+             
+                <button type="submit" name="submit" id="submitForm" disabled="disabled" class="btn btn-default"><span class="glyphicon glyphicon-save"></span>Tallenna</button>
+                <button type="reset" class="btn btn-default"><span class="glyphicon glyphicon-remove-sign"></span>Tyhjennä</button>
+            </div>
+            
+        </form>
+    </div>
+    
+    </div>
+    <!-- Carousel -->
+<div id="myCarousel" class="carousel slide" data-ride="carousel">
+ <ol class="carousel-indicators">
+    <li data-target="#myCarousel" data-slide-to="0" class="active"></li>
+    <li data-target="#myCarousel" data-slide-to="1"></li>
+    <li data-target="#myCarousel" data-slide-to="2"></li>
+	<li data-target="#myCarousel" data-slide-to="3"></li>
+	<li data-target="#myCarousel" data-slide-to="4"></li>
+	
+   
+  </ol>
+  
+   <div class="carousel-inner" role="listbox">
+    <div class="item active">
+      <img src="../static/images/kuva1.jpg" alt="kuva1"
+         th:src="@{../../images/kuva1.jpg}"/>
+    </div>
+    
+     <div class="item">
+      <img src="../static/images/kuva2.jpg" alt="kuva2"
+      th:src="@{../../images/kuva2.jpg}"/>
+    </div>
+    
+    <div class="item">
+      <img src="../static/images/kuva3.jpg" alt="kuva3"
+      th:src="@{../../images/kuva3.jpg}"/>
+    </div>
+    
+    <div class="item">
+      <img src="../static/images/kuva4.jpg" alt="kuva4"
+      th:src="@{../../images/kuva4.jpg}"/>
+    </div>
+    
+    <div class="item">
+      <img src="../static/images/kuva5.jpg" alt="kuva5"
+      th:src="@{../../images/kuva5.jpg}"/>
+    </div>
+    
+   
+</div>
+  
+  
+</div>
+</div>
+
+
+<!-- Autolista -->
+<datalist id="autoList">
+<option value= "Dallara DW12 Indy Car" />
+<option value= "Marussia-Cosworth MR01" />
+<option value= "ISI Formula Masters" />
+<option value="Williams JPH1B FIA F2" />
+<option value="Formula Renault 3.5 2014" />
+<option value="Formula Renault 3.5 2010" />
+<option value="Skip Barber Formula 2000" />
+<option value="Gen 6 NASCAR" />
+<option value="Kart F1" />
+<option value="Kart Junior" />
+<option value="Nissan GT-R" />
+<option value="Chevrolet Corvette C6.R" />
+<option value="Chevrolet Camaro" />
+<option value="Nissan 370Z" />
+<option value="Renault Mégane Trophy II" />
+<option value="Honda Civic NGTC" />
+<option value="Renault Clio 197" />
+<option value="EVE F1" />
+<option value="EVE F2" />
+<option value="EVE F3	" />
+<option value="Spark F1" />
+<option value="Spark F2" />
+<option value="Spark F3" />
+<option value="Brabham-Repco BT20" />
+<option value="Howston G6" />
+<option value="Howston G4" />
+<option value="AC Cobra 427" />
+<option value="Palatov D4	" />
+<option value="Corvette C6 Coupe" />
+<option value="Corvette C6 Grand Sport" />
+<option value="Corvette C6 Z06	" />
+<option value="Corvette C6 ZR1	" />
+<option value="Honda NSX 1991	" />
+<option value="Panoz AIV Roadster	" />
+<option value="Mercedes-Benz SLS	" />
+<option value="Formula RC" />
+<option value="Interceptor Quad" />
+</datalist>
+
+
+<!-- Ratalista -->
+<datalist id="rataList">
+<option value="Alabama Speedway" />
+<option value="Apple Valley Speedway oval" />
+<option value="Apple Valley Speedway roadcourse" />
+<option value="Apple Valley Speedway interior" />
+<option value="Atlanta Motorsports Park full" />
+<option value="Atlanta Motorsports Park kart A" />
+<option value="Atlanta Motorsports Park kart b" />
+<option value="Atlanta Motorsports Park kart b+" />
+<option value="Atlanta Motorsports Park kart c" />
+<option value="Bathurst" />
+<option value="Autodromo di Mores" />
+<option value="Belgium historic gp" />
+<option value="Brookdale Speedway" />
+<option value="Eagle Creek Speedway" />
+<option value="Indianapolis Motor Speedway 2013 oval" />
+<option value="Indianapolis Motor Speedway 2014 gp" />
+<option value="Indianapolis Motor Speedway 2013 gp" />
+<option value="Indianapolis Motor Speedway 2007 gp" />
+<option value="Autodromo Massimo Angiolucci 10k roadcourse" />
+<option value="Autodromo Massimo Angiolucci roadcourse" />
+<option value="Autodromo Massimo Angiolucci junior roadcourse" />
+<option value="Jacksonville Superspeedway" />
+<option value="Joesville Speedway" />
+<option value="Lime Rock no chicanes" />
+<option value="Lime Rock all chicanes" />
+<option value="Lime Rock uphill chicane" />
+<option value="Lime Rock west bend chicane" />
+<option value="Loch Drummond short" />
+<option value="Loch Drummond long" />
+<option value="Longford 1967" />
+<option value="Lost Valley" />
+<option value="Malaysia" />
+<option value="Mills Metro Park" />
+<option value="Monaco Street Circuit" />
+<option value="Montreal" />
+<option value="Mountain Peak Speedway Infield Roadcourse" />
+<option value="Mountain Peak Speedway" />
+<option value="Mountain Peak Speedway legends oval" />
+<option value="Mountain Peak Speedway kart oval" />
+<option value="Mountain Peak Speedway kart long" />
+<option value="Mountain Peak Speedway kart short" />
+<option value="Mountain Peak Speedway kart reverse" />
+<option value="Northside International Raceway" />
+<option value="Palm Beach International Raceway" />
+<option value="Palm Springs Speedway Speedway" />
+<option value="Palm Springs Speedway roadcourse A" />
+<option value="Palm Springs Speedway roadcourse B" />
+<option value="Portugal International grand prix" />
+<option value="Portugal International gt" />
+<option value="Quebec SuperKarts" />
+<option value="São Paulo" />
+<option value="Sardian Heights short" />
+<option value="Sardian Heights long" />
+<option value="Silverstone gp/gt" />
+<option value="Silverstone international" />
+<option value="Tiger Moth Aerodrome race layout 1" />
+<option value="Tiger Moth Aerodrome race layout 2" />
+<option value="Tiger Moth Aerodrome race layout 3 " />
+<option value="Tiger Moth Aerodrome test track" />
+<option value="Toban Raceway Park long" />
+<option value="Toban Raceway Park long reverse" />
+<option value="Toban Raceway Park medium" />
+<option value="Toban Raceway Park medium reverse" />
+<option value="Toban Raceway Park short" />
+<option value="Toban Raceway Park short reverse" />
+</datalist>
+     
+
+
+</body>
+</html>

@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head lang="en">
+ 
+    <title>Ajat</title>
+    
+      
+   <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.2/jquery.min.js"></script>
+  <script src="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js"></script>
+ 
+    <!--/*/ <th:block th:include="fragments/headerinc :: head"></th:block> /*/-->
+</head>
+<body>
+<div class="container">
+
+<!-- Navbar -->
+
+<nav class="navbar navbar-default">
+  <div class="container-fluid">
+    <div class="navbar-header">
+      <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#myNavbar">
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>                      
+      </button>
+     
+    </div>
+    
+    <div class="collapse navbar-collapse" id="myNavbar">
+      <ul class="nav navbar-nav">
+        <li> <a href="#" th:href="@{/index}"> <span class="glyphicon glyphicon-home"></span>Kotisivu</a></li>
+      	<li class="active"><a href="#" th:href="@{/times}"> <span class="glyphicon glyphicon-time"></span>Ajat</a></li>
+       	<li><a href="#" th:href="@{/times/new}"><span class="glyphicon glyphicon-plus"></span>Lisää aika</a></li>
+      </ul>
+    </div>
+  </div>
+</nav>
+
+  <div class="jumbotron text-center">
+  <h3>Lista</h3>
+ 
+</div>
+    <div th:if="${not #lists.isEmpty(times)}">
+   
+        <table class="table table-hover">
+        
+            <tr>
+                <th>ID</th>
+                <th><span class="glyphicon glyphicon-dashboard"></span>Auto</th>
+                <th><span class="glyphicon glyphicon-road"></span>Rata</th>
+                <th><span class="glyphicon glyphicon-time"></span>Aika</th>
+                <th><span class="glyphicon glyphicon-calendar"></span>Pvm</th>
+               <!--<th>View</th>-->
+               <th><span class="glyphicon glyphicon-edit"></span></th>
+               <th><span class="glyphicon glyphicon-trash"></span></th>
+            </tr>
+            <tr th:each="times : ${times}">
+                <td th:text="${times.id}"><a href="/times/${times.id}">Id</a></td>
+                <td th:text="${times.auto}">Auto</td>
+                <td th:text="${times.rata}">Rata</td>
+                <td th:text="${times.aika}">Aika</td>
+               	<td th:text = "${times.pvm}">Pvm</td>
+                <!--<td><a th:href="${'/times/' + times.id}">View</a></td>-->
+                <td><a th:href="${'/times/edit/' + times.id}"><span class="glyphicon glyphicon-edit"></span>Muokkaa</a></td>
+                <td><a th:href="${'/times/delete/' + times.id}"><span class="glyphicon glyphicon-trash"></span>Poista</a></td>
+            </tr>
+        </table>
+ 
+    </div>
+    
+<!-- Carousel -->
+<div id="myCarousel" class="carousel slide" data-ride="carousel">
+ <ol class="carousel-indicators">
+    <li data-target="#myCarousel" data-slide-to="0" class="active"></li>
+    <li data-target="#myCarousel" data-slide-to="1"></li>
+    <li data-target="#myCarousel" data-slide-to="2"></li>
+	<li data-target="#myCarousel" data-slide-to="3"></li>
+	<li data-target="#myCarousel" data-slide-to="4"></li>
+	
+   
+  </ol>
+  
+   <div class="carousel-inner" role="listbox">
+    <div class="item active">
+      <img src="../static/images/kuva1.jpg" alt="kuva1"
+         th:src="@{images/kuva1.jpg}"/>
+    </div>
+    
+     <div class="item">
+      <img src="../static/images/kuva2.jpg" alt="kuva2"
+      th:src="@{images/kuva2.jpg}"/>
+    </div>
+    
+    <div class="item">
+      <img src="../static/images/kuva3.jpg" alt="kuva3"
+      th:src="@{images/kuva3.jpg}"/>
+    </div>
+    
+    <div class="item">
+      <img src="../static/images/kuva4.jpg" alt="kuva4"
+      th:src="@{images/kuva4.jpg}"/>
+    </div>
+    
+    <div class="item">
+      <img src="../static/images/kuva5.jpg" alt="kuva5"
+      th:src="@{images/kuva5.jpg}"/>
+    </div>   
+</div>  
+</div>  
+</div>
+
+
+
+
+</body>
+</html>
